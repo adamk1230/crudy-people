@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Modal } from '@/components/Modal';
+import { PersonInformation } from '../PersonInformation';
 
 interface AddPersonModalProps {
   closeModal: () => void;
@@ -21,7 +22,7 @@ export const AddPersonModal: FC<AddPersonModalProps> = ({
       closeModal={closeModal}
       ariaLabel={ModalLabel}
     >
-      <h1>place holder</h1>
+      <PersonInformation closeModal={closeModal} />
     </Modal>
   );
 };
