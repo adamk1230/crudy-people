@@ -8,6 +8,11 @@ export interface AddButtonProps {
   onClick: () => void;
 }
 
+export enum AddButtonConstant {
+  ButtonAriaLabel = 'add',
+}
+const { ButtonAriaLabel } = AddButtonConstant;
+
 export const AddButton: FC<AddButtonProps> = ({ buttonText, onClick }) => {
   return (
     <Button
@@ -15,6 +20,8 @@ export const AddButton: FC<AddButtonProps> = ({ buttonText, onClick }) => {
       startIcon={<AddIcon />}
       color="success"
       onClick={onClick}
+      role="button"
+      aria-label={ButtonAriaLabel}
     >
       {buttonText}
     </Button>
