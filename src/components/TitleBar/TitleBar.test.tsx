@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { TitleBar } from './TitleBar';
+import { TitleBar } from './';
 
 describe('TitleBar', () => {
   it('should render the page title', () => {
