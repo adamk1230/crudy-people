@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import { writePersonData } from '@/firebase/PersonService';
 
 type State = {
   username: string;
@@ -139,7 +140,7 @@ export const PersonInformation: FC<PersonInformationProps> = ({
     dispatch({ type: 'VALIDATE_FIELDS' });
 
     if (firstName && lastName && username) {
-      // place holder write data
+      writePersonData({ username, firstName, lastName, avatarUrl });
       closeModal?.();
     }
   };
