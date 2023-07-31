@@ -19,7 +19,7 @@ export const PersonCardContainer: FC = () => {
   return (
     <Grid container spacing={2}>
       {people?.map((person) => (
-        <Grid xs={4} key={person.id}>
+        <Grid xs={12} sm={4} key={person.id}>
           <PersonCard person={person} />
         </Grid>
       ))}
