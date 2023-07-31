@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {
+  editPersonData,
   Person,
   writePersonData,
-  editPersonData,
 } from '@/firebase/PersonService';
 
 type State = {
@@ -105,16 +105,16 @@ export const PersonInformation: FC<PersonInformationProps> = ({
   person: { username, firstName, lastName, avatarUrl, id } = {},
 }) => {
   const initialState: State = {
-    username: username || '',
+    avatarUrl: avatarUrl || '',
     firstName: firstName || '',
     lastName: lastName || '',
-    avatarUrl: avatarUrl || '',
-    usernameError: false,
+    username: username || '',
     firstNameError: false,
     lastNameError: false,
-    usernameTouched: false,
+    usernameError: false,
     firstNameTouched: false,
     lastNameTouched: false,
+    usernameTouched: false,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 

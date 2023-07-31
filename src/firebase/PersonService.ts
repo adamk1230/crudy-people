@@ -47,3 +47,9 @@ export const editPersonData = ({
 
   update(ref(db), updates);
 };
+
+export const deletePersonData = (id: string) => {
+  update(ref(db), {
+    [PATH + id]: null,
+  });
+};

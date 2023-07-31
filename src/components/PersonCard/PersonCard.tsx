@@ -5,9 +5,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Person } from '@/firebase/PersonService';
+import { deletePersonData, Person } from '@/firebase/PersonService';
 import { PersonModal } from '../PersonModal';
+import { DeleteModal } from '@/components/DeleteModal';
 
 export interface PersonCardProps {
   person: Person;
@@ -20,10 +22,11 @@ const { AvatarPlaceHolderLabel } = PersonCardConstant;
 
 export const PersonCard: FC<PersonCardProps> = ({
   person,
-  person: { username, firstName, lastName, avatarUrl },
+  person: { avatarUrl, firstName, id, lastName, username },
 }) => {
   const [imageError, setImageError] = useState<boolean>(false);
   const [isPersonModalOpen, setIsPersonModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
   const handleImageError = () => {
     setImageError(true);
@@ -35,6 +38,20 @@ export const PersonCard: FC<PersonCardProps> = ({
 
   const closePersonModal = () => {
     setIsPersonModalOpen(false);
+  };
+
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    if (id) {
+      deletePersonData(id);
+    }
   };
 
   return (
@@ -66,6 +83,9 @@ export const PersonCard: FC<PersonCardProps> = ({
           <IconButton aria-label="edit person" onClick={openPersonModal}>
             <EditIcon />
           </IconButton>
+          <IconButton aria-label="delete" onClick={openDeleteModal}>
+            <DeleteIcon />
+          </IconButton>
         </CardActions>
       </Card>
       {isPersonModalOpen && (
@@ -73,6 +93,14 @@ export const PersonCard: FC<PersonCardProps> = ({
           closeModal={closePersonModal}
           isModalOpen={isPersonModalOpen}
           person={person}
+        />
+      )}
+      {isDeleteModalOpen && (
+        <DeleteModal
+          isModalOpen={isDeleteModalOpen}
+          closeModal={closeDeleteModal}
+          handleDelete={handleDelete}
+          thingToDelete={username}
         />
       )}
     </>
