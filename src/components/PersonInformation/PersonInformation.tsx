@@ -5,7 +5,11 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { writePersonData } from '@/firebase/PersonService';
+import {
+  Person,
+  writePersonData,
+  editPersonData,
+} from '@/firebase/PersonService';
 
 type State = {
   username: string;
@@ -92,16 +96,19 @@ const {
 
 export interface PersonInformationProps {
   closeModal?: () => void;
+  person?: Person | undefined;
 }
 
 export const PersonInformation: FC<PersonInformationProps> = ({
   closeModal,
+  person,
+  person: { username, firstName, lastName, avatarUrl, id } = {},
 }) => {
   const initialState: State = {
-    username: '',
-    firstName: '',
-    lastName: '',
-    avatarUrl: '',
+    username: username || '',
+    firstName: firstName || '',
+    lastName: lastName || '',
+    avatarUrl: avatarUrl || '',
     usernameError: false,
     firstNameError: false,
     lastNameError: false,
@@ -145,7 +152,17 @@ export const PersonInformation: FC<PersonInformationProps> = ({
     }
   };
 
-  const title = 'Add Person';
+  const handleEdit = () => {
+    const { firstName, lastName, username, avatarUrl } = state;
+    dispatch({ type: 'VALIDATE_FIELDS' });
+
+    if (firstName && lastName && username && id) {
+      editPersonData({ username, firstName, lastName, avatarUrl, id });
+      closeModal?.();
+    }
+  };
+
+  const title = person ? 'Edit Person' : 'Add Person';
 
   return (
     <Grid container spacing={2}>
@@ -220,7 +237,7 @@ export const PersonInformation: FC<PersonInformationProps> = ({
             type="submit"
             variant="outlined"
             color="primary"
-            onClick={handleAdd}
+            onClick={person ? handleEdit : handleAdd}
             role="button"
           >
             {SubmitText}

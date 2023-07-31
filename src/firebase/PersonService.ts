@@ -1,29 +1,49 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ref, set } from 'firebase/database';
+import { ref, set, update } from 'firebase/database';
 import { db } from '../firebase/firebaseConfig';
 
 export interface Person {
-  id?: string;
-  username: string;
-  firstName: string;
-  lastName: string;
   avatarUrl?: string;
+  firstName: string;
+  id?: string;
+  lastName: string;
+  username: string;
 }
 
 const PATH = 'people/';
 
 export const writePersonData = ({
-  username,
+  avatarUrl,
   firstName,
   lastName,
-  avatarUrl,
+  username,
 }: Person) => {
   const id = uuidv4();
   set(ref(db, PATH + id), {
-    id,
-    username,
-    firstName,
-    lastName,
     avatarUrl,
+    firstName,
+    id,
+    lastName,
+    username,
   });
+};
+
+export const editPersonData = ({
+  avatarUrl,
+  firstName,
+  id,
+  lastName,
+  username,
+}: Person) => {
+  const updates = {
+    [PATH + id]: {
+      avatarUrl,
+      firstName,
+      id,
+      lastName,
+      username,
+    },
+  };
+
+  update(ref(db), updates);
 };

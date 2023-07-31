@@ -1,7 +1,7 @@
 'use client';
 import { FC, useState } from 'react';
 import { AddButton } from '@/components/AddButton';
-import { AddPersonModal } from '@/components/AddPersonModal';
+import { PersonModal } from '@/components/PersonModal';
 
 export enum AddPersonConstant {
   ButtonText = 'Person',
@@ -22,7 +22,7 @@ export const AddPerson: FC = () => {
   return (
     <div>
       <AddButton onClick={openModal} buttonText={ButtonText} />
-      <AddPersonModal isModalOpen={isModalOpen} closeModal={closeModal} />
+      <PersonModal isModalOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 };
